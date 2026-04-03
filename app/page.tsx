@@ -42,7 +42,7 @@ export default function Home() {
         href="/netsuite"
         style={{
           fontSize: "0.9rem",
-          color: "#c45c26",
+          color: "#00d1ff",
           textDecoration: "underline",
           textUnderlineOffset: "3px",
         }}

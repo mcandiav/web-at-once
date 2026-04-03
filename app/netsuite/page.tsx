@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { getHomeLeadAsset, mediaUrl } from "@/lib/media";
 import { getSiteUrl } from "@/lib/site";
 import styles from "./landing.module.css";
 
@@ -28,15 +30,27 @@ export default function NetSuiteLandingPage() {
   const mailto = `mailto:${contactEmail}?subject=${encodeURIComponent(
     "Consulta NetSuite — diagnóstico / servicios",
   )}`;
+  const logo = getHomeLeadAsset();
 
   return (
     <div className={styles.page}>
       <header className={styles.nav}>
-        <Link href="/">At-Once</Link>
-        <div style={{ display: "flex", gap: "0.75rem", alignItems: "center" }}>
-          <Link href="#servicios" style={{ fontWeight: 500 }}>
-            Servicios
-          </Link>
+        <Link href="/" className={styles.brand}>
+          {logo ? (
+            <Image
+              src={mediaUrl(logo.file)}
+              alt={logo.alt}
+              width={200}
+              height={48}
+              className={styles.brandLogo}
+              priority
+            />
+          ) : (
+            "At-Once"
+          )}
+        </Link>
+        <div className={styles.navLinks}>
+          <Link href="#servicios">Servicios</Link>
           <a className={styles.navCta} href={mailto}>
             Hablar con un especialista
           </a>
@@ -237,7 +251,7 @@ export default function NetSuiteLandingPage() {
             También puede volver al sitio corporativo o combinar esta oferta con
             otros servicios At-Once según su maturidad digital.
           </p>
-          <Link href="/" className={styles.btnGhost} style={{ color: "var(--ink)", borderColor: "var(--line)" }}>
+          <Link href="/" className={styles.btnGhost}>
             Ir al inicio
           </Link>
         </div>
