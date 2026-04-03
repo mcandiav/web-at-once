@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { getHomeLeadAsset, mediaUrl } from "@/lib/media";
 
 export default function Home() {
@@ -37,6 +38,17 @@ export default function Home() {
         </div>
       ) : null}
       <p style={{ margin: 0, fontSize: "1rem" }}>At-Once</p>
+      <Link
+        href="/netsuite"
+        style={{
+          fontSize: "0.9rem",
+          color: "#c45c26",
+          textDecoration: "underline",
+          textUnderlineOffset: "3px",
+        }}
+      >
+        Servicios NetSuite para empresas
+      </Link>
     </main>
   );
 }
