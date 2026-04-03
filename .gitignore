@@ -12,6 +12,10 @@
 /.next/
 /out/
 
+# generado desde media/ en cada dev/build (originales viven en media/)
+/public/media/*
+!/public/media/.gitkeep
+
 # misc
 .DS_Store
 *.pem

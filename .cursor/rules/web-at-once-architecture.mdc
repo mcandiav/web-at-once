@@ -1,0 +1,32 @@
+---
+description: Arquitectura y alcance oficial de Web At-once (At-Once)
+alwaysApply: true
+---
+
+# Web At-once — contexto del proyecto
+
+## Fuente de verdad
+
+- **`read.md`** en la raíz de este repo es la arquitectura vigente. Antes de decisiones que la contradigan, alinear con ese documento o proponer actualizarlo explícitamente.
+
+## Qué es este repo
+
+- Sitio **corporativo multipágina** para **At-Once**.
+- **Next.js** (App Router), **TypeScript**.
+- **Sin backend de negocio propio en V1**; no convertir el sitio en API compartida del ecosistema.
+- El **contenido editorial** vive en **otro proyecto**; aquí solo el shell técnico y páginas que consuman o enlacen contenido según se defina después.
+
+## Despliegue e infra
+
+- Flujo: **GitHub → EasyPanel → contenedor Docker → Cloudflare (proxy)**.
+- **Traefik / EasyPanel** enrutan al contenedor; mantener coherencia con **puerto interno 80** en la imagen salvo decisión documentada en `read.md`.
+- No mezclar responsabilidades con Traefik, n8n, OpenProject, Nextcloud ni bases de datos: este servicio es **solo sitio web corporativo**.
+
+## Prioridades de diseño
+
+- **SEO**, mantenibilidad, despliegue simple y reproducible.
+- Infra **portable**; evitar acoplamientos ocultos a un solo entorno.
+
+## Idioma
+
+- UI y metadatos orientados a **español** salvo requisito explícito en contrario.

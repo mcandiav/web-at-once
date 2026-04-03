@@ -1,0 +1,20 @@
+{
+  "assets": [
+    {
+      "file": "logo-at-once.png",
+      "alt": "At-Once — logotipo corporativo",
+      "title": "At-Once",
+      "ogTitle": "At-Once",
+      "ogDescription": "Sitio corporativo At-Once en web.at-once.cl",
+      "defaultOg": true
+    },
+    {
+      "file": "FAVICON.png",
+      "alt": "At-Once — icono del sitio (favicon)",
+      "title": "At-Once",
+      "ogTitle": "At-Once",
+      "ogDescription": "Sitio corporativo At-Once (web.at-once.cl)",
+      "defaultOg": false
+    }
+  ]
+}

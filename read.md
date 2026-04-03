@@ -4,6 +4,7 @@
 
 | Fecha | Versión | Cambio realizado | Motivo | Impacto | Sección afectada |
 |---|---|---|---|---|---|
+| 2026-04-03 | V1.1 | Dominio público del sitio: **web.at-once.cl** (HTTPS). URL canónica reflejada en app (`lib/site.ts`) y build Docker (`NEXT_PUBLIC_SITE_URL`). | Fijar publicación y metadatos SEO/Open Graph. | EasyPanel / Cloudflare deben servir ese host; variables de entorno alineadas. | `read.md`, layout, Dockerfile |
 | 2026-04-03 | V1.0 | Se define la arquitectura inicial de Web At-once como sitio corporativo multipágina en Next.js, desplegado por Docker en EasyPanel y publicado detrás de Cloudflare proxy. | Alinear el nuevo sitio con la infraestructura vigente y establecer una base técnica clara desde el inicio. | Queda aprobado el stack base, estrategia de despliegue, patrón de publicación y criterio de puertos. | Todo el documento |
 
 ---
@@ -25,12 +26,12 @@ Levantar el sitio web corporativo multipágina de **At-Once** como un proyecto i
 - La estrategia elegida es **Ruta A**: `GitHub -> EasyPanel`.
 - El perímetro de publicación será **Cloudflare en modo proxy**.
 - El contenido se gestionará en **otro proyecto**, separado del proyecto técnico del sitio.
+- **Dominio del sitio:** **web.at-once.cl** (subdominio, tráfico HTTPS vía Cloudflare proxy según despliegue).
 
 ---
 
 ## 3. Lo que falta validar
 
-- Dominio final del sitio (raíz o subdominio).
 - Política de caché en Cloudflare.
 - Estructura exacta del proyecto de contenido y mecanismo de integración.
 - Estrategia de build final:
@@ -73,12 +74,11 @@ Criterio aprobado para este servicio:
 - **No se adopta puerto 90 como estándar**.
 - A nivel público, el servicio debe mantenerse en el patrón normal de publicación web: **80/443**.
 - A nivel interno de contenedor:
-  - **3002** es el puerto interno acordado si Next.js corre con runtime Node (este proyecto);
-  - **80** es adecuado si el build se sirve mediante un servidor web dedicado.
+  - En este proyecto el contenedor escucha en **80** por dentro; Traefik / EasyPanel enrutan a ese puerto.
 
 Decisión vigente:
-- **seguir con 80/443 en publicación externa**;
-- dejar el puerto interno sujeto a la forma final de runtime del contenedor.
+- **80/443 en publicación externa** (Traefik);
+- **puerto interno del contenedor: 80**, alineado con el enrutado del panel (sin depender de `.env` en el repo: `PORT` va en variables del servicio o en el `Dockerfile`).
 
 ### 4.5 Integración con infraestructura existente
 

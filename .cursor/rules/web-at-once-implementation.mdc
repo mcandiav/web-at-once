@@ -1,0 +1,46 @@
+---
+description: Convenciones Next.js, Docker y cambios de código en Web At-once
+globs:
+  - app/**/*
+  - Dockerfile
+  - next.config.ts
+  - package.json
+  - package-lock.json
+  - tsconfig.json
+  - .dockerignore
+  - media/**/*
+  - lib/**/*
+alwaysApply: false
+---
+
+# Web At-once — implementación
+
+## Carpeta `media/`
+
+- **Miguel solo copia imágenes aquí** (jpg, png, webp, svg, avif, gif). No debe editar JSON a mano.
+- **`scripts/ingest-media.mjs`** (se ejecuta antes de `sync:media` en `dev`/`build`): registra archivos nuevos en **`media/catalog.json`**, rellena `alt` / Open Graph con plantillas At-Once, y deja **un solo** `defaultOg: true` (prioridad: nombre de archivo que contenga `logo`, si no la primera entrada).
+- **`sync:media`**: copia solo imágenes a **`public/media/`** → URLs `/media/...`.
+- Código: `@/lib/media.ts` (`getHomeLeadAsset` para la home, `getMediaAsset`, `mediaUrl`, `getMediaCatalog`). La IA puede refinar textos del catálogo o páginas cuando haga falta.
+- **`NEXT_PUBLIC_SITE_URL`** en EasyPanel para URLs absolutas en producción.
+
+## Sitio público
+
+- Dominio de producción: **`web.at-once.cl`**. Fuente: `lib/site.ts` (`SITE_HOST`, `getSiteUrl()`). Override opcional: `NEXT_PUBLIC_SITE_URL` (EasyPanel / local).
+
+## Next.js
+
+- Usar **App Router** (`app/`). Nuevas rutas como `app/.../page.tsx` y layouts donde corresponda.
+- Mantener **`output: "standalone"`** en `next.config.ts` salvo migración acordada en `read.md` (Docker / EasyPanel dependen de ello).
+- Priorizar componentes y estilos **coherentes** con lo existente; evitar librerías nuevas sin necesidad clara.
+
+## Docker y runtime
+
+- La imagen de producción debe seguir construyéndose con **`npm ci`** (mantener **`package-lock.json`** actualizado al cambiar dependencias).
+- **Puerto de escucha en contenedor: 80** (`PORT` / `EXPOSE` en `Dockerfile`), alineado con Traefik/EasyPanel. Si se cambia el puerto, actualizar `Dockerfile` y documentar en `read.md`.
+- No copiar secretos al contexto de build innecesariamente; respetar **`.dockerignore`**.
+
+## Cambios de código
+
+- Diffs **acotados** al pedido: sin refactors masivos ni archivos extra no solicitados.
+- No añadir documentación markdown nueva salvo que el usuario la pida (salvo actualizar **`read.md`** cuando el cambio sea arquitectónico).
+- Tras cambios en dependencias o build, razonar si hace falta **rebuild de imagen** o **push** para despliegue.
