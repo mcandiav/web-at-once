@@ -4,102 +4,94 @@
 
 | Fecha | Versión | Cambio realizado | Motivo | Impacto | Sección afectada |
 |---|---|---|---|---|---|
-| 2026-05-04 | V1.2 | Se incorpora una especificación funcional y visual para que el sitio replique la landing de referencia `https://labs.muze.cl/at-once/`. | El despliegue inicial ya levanta, pero todavía no refleja la experiencia, estructura ni contenido de la landing objetivo. | El rol Programador queda instruido para reconstruir el sitio como landing comercial completa, no como placeholder corporativo mínimo. | Nueva sección 9 / Alcance visual y funcional |
+| 2026-05-04 | V1.3 | Se corrige la definición: `https://labs.muze.cl/at-once/` no es inspiración ni referencia genérica; es el modelo que debe copiarse/reconstruirse visual y estructuralmente. | La implementación del Programador levantó, pero no quedó igual a la página objetivo. | El trabajo de desarrollo debe rehacerse hasta coincidir con la landing de Labs en layout, secciones, jerarquía, navegación, formularios, CTAs y experiencia visual. | Sección 9 / Criterios de aceptación |
+| 2026-05-04 | V1.2 | Se incorpora una especificación funcional y visual para la landing de referencia `https://labs.muze.cl/at-once/`. | El despliegue inicial ya levanta, pero todavía no refleja la experiencia, estructura ni contenido de la landing objetivo. | El rol Programador queda instruido para reconstruir el sitio como landing comercial completa, no como placeholder corporativo mínimo. | Nueva sección 9 / Alcance visual y funcional |
 | 2026-04-03 | V1.1 | Dominio público del sitio: **web.at-once.cl** (HTTPS). URL canónica reflejada en app (`lib/site.ts`) y build Docker (`NEXT_PUBLIC_SITE_URL`). | Fijar publicación y metadatos SEO/Open Graph. | EasyPanel / Cloudflare deben servir ese host; variables de entorno alineadas. | `read.md`, layout, Dockerfile |
-| 2026-04-03 | V1.0 | Se define la arquitectura inicial de Web At-once como sitio corporativo multipágina en Next.js, desplegado por Docker en EasyPanel y publicado detrás de Cloudflare proxy. | Alinear el nuevo sitio con la infraestructura vigente y establecer una base técnica clara desde el inicio. | Queda aprobado el stack base, estrategia de despliegue, patrón de publicación y criterio de puertos. | Todo el documento |
+| 2026-04-03 | V1.0 | Se define la arquitectura inicial de Web At-once como sitio corporativo multipágina en Next.js, desplegado por Docker en EasyPanel y publicado detrás de Cloudflare proxy. | Alinear el nuevo sitio con la infraestructura vigente y establecer una base técnica clara desde el inicio. | Queda aprobado el stack base, estrategia de despliegue, patrón de puertos y responsabilidad del servicio. | Todo el documento |
 
 ---
 
 ## 1. Problema u objetivo actual
 
-Levantar el sitio web corporativo multipágina de **At-Once** como un proyecto independiente, desplegable en **EasyPanel**, versionado en **GitHub** y publicado detrás de **Cloudflare** en modo proxy.
+Levantar el sitio web corporativo de **At-Once** como un proyecto independiente, desplegable en **EasyPanel**, versionado en **GitHub** y publicado detrás de **Cloudflare**.
 
-El despliegue ya debe servir una experiencia equivalente a la landing de referencia pública `https://labs.muze.cl/at-once/`, no una portada mínima o placeholder.
+El sitio ya levantó técnicamente, pero la implementación actual no cumple el objetivo visual: debe verse como la landing de Labs.
+
+Sitio objetivo que se debe copiar/reconstruir:
+
+```text
+https://labs.muze.cl/at-once/
+```
+
+Sitio destino:
+
+```text
+https://web.at-once.cl
+```
+
+Definición corregida:
+
+> `labs.muze.cl/at-once/` es el modelo visual y estructural a replicar. No es solo una inspiración.
 
 ---
 
 ## 2. Lo que está confirmado
 
-- El rol de este hilo es **Arquitecto**.
-- El proyecto se llamará **Web At-once**.
-- El sitio será **multipágina**, pero la prioridad inmediata es la landing principal.
+- El proyecto se llama **Web At-once**.
+- El sitio está desplegado como servicio en **EasyPanel**.
 - El framework aprobado es **Next.js**.
-- El repositorio se crea **desde cero**.
-- El despliegue será en **EasyPanel**.
-- La estrategia elegida es **Ruta A**: `GitHub -> EasyPanel`.
-- El perímetro de publicación será **Cloudflare en modo proxy**.
-- El contenido se gestionará en **otro proyecto**, separado del proyecto técnico del sitio.
-- **Dominio del sitio:** **web.at-once.cl** (subdominio, tráfico HTTPS vía Cloudflare proxy según despliegue).
-- La landing objetivo de esta etapa es la experiencia pública de referencia `labs.muze.cl/at-once`.
+- El empaquetado aprobado es **Docker**.
+- El contenedor escucha internamente en puerto **80**.
+- El dominio objetivo es **web.at-once.cl**.
+- El sitio Labs `https://labs.muze.cl/at-once/` es el patrón exacto que debe seguir la implementación.
+- La implementación actual del Programador no queda aceptada si visualmente no coincide con Labs.
 
 ---
 
 ## 3. Lo que falta validar
 
-- Política de caché en Cloudflare.
-- Estructura exacta del proyecto de contenido y mecanismo de integración.
-- Estrategia de build final:
-  - Next.js servido por runtime Node,
-  - o export estático servido por web server.
-- Reglas de observabilidad, backup y rollback específicas del servicio en EasyPanel.
-- Si la versión final debe copiar literalmente textos/branding de la referencia o si se adaptará con redacción propia aprobada por Miguel.
-- Destino funcional del formulario. Por ahora debe quedar como componente visual sin integración obligatoria.
+- Si Miguel autoriza copiar literalmente todos los textos finales de Labs o si el Programador debe dejarlos parametrizados para ajuste posterior.
+- Si hay assets visuales específicos de Labs que deben reproducirse con CSS o incorporarse como imágenes.
+- Validación visual final lado a lado entre:
+  - `https://labs.muze.cl/at-once/`
+  - `https://web.at-once.cl`
+- Destino funcional del formulario. Por ahora solo debe existir visualmente.
 
 ---
 
-## 4. Definición arquitectónica propuesta
+## 4. Definición arquitectónica vigente
 
 ### 4.1 Stack aprobado
 
-- **Framework:** Next.js
-- **Tipo de sitio:** corporativo multipágina con landing principal prioritaria
-- **Repositorio:** GitHub
-- **Despliegue:** EasyPanel
-- **Empaquetado:** Docker
-- **Perímetro:** Cloudflare proxy
+- **Framework:** Next.js.
+- **Tipo de sitio:** landing comercial principal.
+- **Repositorio:** GitHub.
+- **Despliegue:** EasyPanel.
+- **Empaquetado:** Docker.
+- **Perímetro:** Cloudflare / EasyPanel según configuración del ambiente.
 
-### 4.2 Principios arquitectónicos
+### 4.2 Principio central de esta etapa
 
-- El sitio debe mantenerse independiente de otros servicios del ecosistema.
-- La infraestructura de publicación debe ser simple, reproducible y portable.
-- El proyecto técnico del sitio y el proyecto de contenido deben permanecer desacoplados.
-- La V1 no incorpora backend de negocio propio.
-- Se prioriza SEO, mantenibilidad y facilidad de despliegue.
-- La home no debe quedar como placeholder: debe implementar la landing comercial completa.
+La prioridad no es crear una landing parecida ni una reinterpretación visual.
 
-### 4.3 Flujo de despliegue
+La prioridad es reconstruir la landing Labs lo más fielmente posible:
 
-1. Desarrollo y versionado en GitHub.
-2. EasyPanel toma el repositorio y ejecuta el build.
-3. El proyecto se empaqueta y ejecuta como contenedor Docker.
-4. Cloudflare publica el servicio en modo proxy.
+- misma estructura narrativa,
+- mismas secciones,
+- mismo orden,
+- misma jerarquía visual,
+- misma intención comercial,
+- misma disposición de bloques,
+- misma navegación ancla,
+- mismos CTAs,
+- mismo formulario visual,
+- misma experiencia responsive.
 
-### 4.4 Puertos
+### 4.3 Restricción de arquitectura
 
-Criterio aprobado para este servicio:
+No modificar Docker, puerto interno ni despliegue si el problema es visual/front-end.
 
-- **No se adopta puerto 90 como estándar**.
-- A nivel público, el servicio debe mantenerse en el patrón normal de publicación web: **80/443**.
-- A nivel interno de contenedor:
-  - En este proyecto el contenedor escucha en **80** por dentro; Traefik / EasyPanel enrutan a ese puerto.
-
-Decisión vigente:
-
-- **80/443 en publicación externa** (Traefik);
-- **puerto interno del contenedor: 80**, alineado con el enrutado del panel (sin depender de `.env` en el repo: `PORT` va en variables del servicio o en el `Dockerfile`).
-
-### 4.5 Integración con infraestructura existente
-
-Web At-once se desplegará como servicio de **EasyPanel**, dentro del entorno que Miguel determine para SB, sin mezclar su responsabilidad con:
-
-- Traefik,
-- n8n,
-- OpenProject,
-- Nextcloud,
-- servicios de base de datos,
-- infraestructura productiva documentada en `infra-prod.md`.
-
-Su rol es exclusivamente el de **sitio corporativo web**.
+El problema actual no está en infraestructura: el sitio levanta. El problema está en implementación de UI/contenido.
 
 ---
 
@@ -109,290 +101,204 @@ Su rol es exclusivamente el de **sitio corporativo web**.
 
 Sin impacto directo.
 
-La landing habla de NetSuite como propuesta comercial, pero no debe conectarse a NetSuite en esta etapa.
+La landing menciona NetSuite comercialmente, pero no debe conectarse a NetSuite en esta etapa.
 
 ### 5.2 Configuración
 
-- Servicio ya creado en EasyPanel.
-- Vinculación al repositorio GitHub.
-- Configuración de dominio y publicación detrás de Cloudflare.
-- Definición posterior de variables de entorno si hicieran falta.
+Sin cambios requeridos por ahora en EasyPanel si el sitio ya levanta.
 
 ### 5.3 Desarrollo
 
-- Reemplazar la portada mínima actual por una landing completa.
-- Implementar estructura visual, secciones, navegación ancla, CTA y contenido comercial.
-- Mantener Dockerfile y despliegue actual mientras no haya una razón técnica para cambiarlos.
+El Programador debe rehacer la home `/` para que coincida con la landing Labs.
+
+No se acepta:
+
+- home mínima,
+- portada con solo logo,
+- landing genérica,
+- cambio de estilo propio,
+- reinterpretación parcial,
+- omitir secciones visibles de Labs,
+- mover el contenido principal a `/netsuite` dejando `/` incompleto.
 
 ### 5.4 Operación
 
-- Despliegue repetible desde Git.
-- Rollback por commit o release.
-- Publicación web estándar detrás de Cloudflare.
+Después del nuevo commit, EasyPanel debe redeployar el servicio y Miguel debe validar visualmente contra Labs.
 
 ---
 
-## 6. Siguiente acción
+## 6. Siguiente acción por rol
 
 ### Arquitecto
 
-Mantener vigente esta definición y usarla como fuente oficial del proyecto.
+Mantener esta definición como fuente oficial y rechazar implementaciones que no coincidan visualmente con Labs.
 
 ### Programador
 
-Implementar la landing principal según la especificación de la sección 9.
+Rehacer la implementación de la home `/` copiando la landing Labs como modelo exacto de estructura, layout y experiencia.
 
 ### Configurador
 
-Validar publicación en EasyPanel y Cloudflare después del commit del Programador.
+Solo validar despliegue posterior. No debe cambiar infraestructura para resolver un problema de UI.
+
+### Miguel
+
+Validar visualmente la página final lado a lado contra Labs.
 
 ---
 
 ## 7. Decisiones descartadas
 
-- Mezclar **Next.js** con **Vue** en el mismo proyecto.
-- Usar **puerto 90** como estándar de publicación del sitio.
-- Acoplar el contenido editorial al mismo proyecto técnico desde la V1.
-- Tratar este servicio como backend de negocio o servicio compartido de infraestructura.
-- Mantener una home mínima con solo logo y enlace a `/netsuite` como versión publicada final.
+- Usar `labs.muze.cl/at-once/` solo como inspiración.
+- Crear una landing alternativa con estilo propio.
+- Mantener la home actual si no coincide con Labs.
+- Mezclar Next.js con Vue en este repositorio.
+- Cambiar Docker o puertos para resolver un problema de diseño.
+- Conectar formulario antes de tener aprobada la UI.
+- Registrar este despliegue en `infra-prod.md` mientras siga en SB o etapa preliminar.
 
 ---
 
 ## 8. Fuente de verdad documental
 
-El archivo `Web At-once/read.md` es la fuente oficial de arquitectura vigente para este proyecto.
+Este archivo `read.md` es la fuente oficial de arquitectura vigente para este proyecto.
 
-La documentación de infraestructura SB se actualizará cuando Miguel confirme el despliegue operativo. `infra-prod.md` queda reservado a infraestructura de producción y no aplica a este despliegue SB.
+La documentación de infraestructura SB se actualizará solo cuando Miguel confirme el despliegue operativo final.
+
+`infra-prod.md` queda reservado a infraestructura de producción y no aplica a este despliegue SB.
 
 ---
 
-## 9. Especificación para reconstruir la landing de referencia
+## 9. Especificación obligatoria para copiar la landing Labs
 
-### 9.1 Objetivo de implementación
+### 9.1 Alcance corregido
 
-El Programador debe transformar el sitio actual en una landing comercial completa equivalente a la referencia pública:
+El Programador debe copiar/reconstruir la landing de Labs en el sitio `web.at-once.cl`.
 
-- URL de referencia: `https://labs.muze.cl/at-once/`
-- URL objetivo del proyecto: `https://web.at-once.cl`
+Referencia obligatoria:
 
-La implementación debe capturar estructura, jerarquía visual, narrativa, secciones, CTA, cards y experiencia general de la referencia.
+```text
+https://labs.muze.cl/at-once/
+```
 
-No basta con mostrar el logo o una portada simple.
+Esta referencia debe usarse como patrón de comparación visual. La implementación se considera incompleta si al abrir ambas páginas lado a lado se perciben diferencias importantes de estructura, proporciones, orden, jerarquía, colores, cards, CTAs o formulario.
 
 ### 9.2 Ruta principal
 
-La landing debe vivir en la ruta principal:
+La landing completa debe vivir en:
 
 ```text
 /
 ```
 
-La ruta `/netsuite` puede mantenerse solo si aporta valor, pero la experiencia principal de venta debe estar en la home.
+La home no puede ser un splash, placeholder, logo simple ni página de acceso hacia otra ruta.
 
-### 9.3 Navegación superior
+### 9.3 Estructura que debe replicarse
 
-Debe existir navegación sticky o claramente visible con enlaces ancla a secciones internas.
+La landing debe mantener el mismo flujo visible de Labs:
 
-Items mínimos:
+1. Header / navegación superior.
+2. Hero principal.
+3. Métricas y bloque visual del diagnóstico.
+4. Sección problema.
+5. Sección diagnóstico de 10 áreas.
+6. Sección entregables.
+7. Sección oportunidades / casos de uso.
+8. Sección proceso.
+9. Sección perfil ideal.
+10. Sección experiencia.
+11. Sección evaluación / formulario.
+12. CTA final.
+13. Footer.
 
-- Diagnóstico
-- Casos de Uso
-- Proceso
-- Para quién es
-- Solicita tu evaluación
+No se deben omitir secciones.
 
-El CTA principal debe destacar visualmente frente a los enlaces normales.
+### 9.4 Navegación superior
 
-### 9.4 Hero principal
+Debe replicar el comportamiento y contenido de Labs:
 
-Debe incluir:
+- Diagnóstico.
+- Casos de Uso.
+- Proceso.
+- Para quién es.
+- Solicita tu evaluación.
 
-- Eyebrow o etiqueta: `Diagnóstico IA + NetSuite`
-- Título principal: `Optimiza tu operación con IA conectada a NetSuite`
-- Bajada principal orientada a empresas productivas que usan NetSuite.
-- Segunda bajada sobre brecha entre ERP y operación real.
-- CTA primario hacia evaluación.
-- CTA secundario hacia proceso o explicación.
-- Línea de confianza: `Diagnóstico en 2-3 semanas • USD 4.900 • Remoto o híbrido`
-- Panel visual lateral o inferior con conceptos:
-  - Quick Wins
-  - Diagnóstico IA
-  - NetSuite Operations
-- Métricas destacadas:
-  - 10 áreas analizadas
-  - 100% remote friendly
-  - USD 4.900 valor diagnóstico
-  - 2-3 semanas
-- Mini flujo de tres pasos:
-  1. Evaluamos tu operación actual
-  2. Identificamos oportunidades de IA
-  3. Entregamos roadmap ejecutable
+El CTA superior debe verse como CTA, no como link común.
 
-### 9.5 Sección problema
+### 9.5 Hero
 
-Debe explicar que muchas empresas usan NetSuite, pero parte de la operación vive fuera del sistema.
+Debe reconstruirse con la misma intención visual de Labs:
 
-Cards mínimas:
+- etiqueta superior `Diagnóstico IA + NetSuite`,
+- título grande sobre optimización operacional con IA conectada a NetSuite,
+- dos párrafos de bajada,
+- CTA primario hacia evaluación,
+- CTA secundario hacia explicación del proceso,
+- línea comercial con duración, precio y modalidad,
+- bloque visual de Quick Wins / Diagnóstico IA / NetSuite Operations,
+- métricas: 10 áreas, 100% remote friendly, USD 4.900, 2-3 semanas,
+- mini proceso de tres pasos.
 
-- Procesos críticos en Excel
-- Coordinación por reuniones
-- Reportes poco accionables
-- Decisiones por intuición
+### 9.6 Secciones de contenido
 
-### 9.6 Sección diagnóstico
+Deben replicarse las secciones de Labs en orden, con cards y grillas equivalentes:
 
-Debe presentar las 10 áreas analizadas.
+- El Problema.
+- El Diagnóstico.
+- Lo que recibes.
+- Ejemplos prácticos.
+- El proceso.
+- Perfil ideal.
+- Nuestra experiencia.
+- Evaluación.
+- Diagnóstico especializado / CTA final.
 
-Áreas:
+### 9.7 Formulario
 
-1. Costos y márgenes
-2. Producción
-3. Inventario
-4. Trazabilidad
-5. Alertas automáticas
-6. Integraciones
-7. Automatización
-8. Reportabilidad
-9. Operación real vs ERP
-10. Priorización de oportunidades
+El formulario debe verse como el de Labs, aunque no se conecte todavía.
 
-### 9.7 Entregables del diagnóstico
+Debe incluir visualmente:
 
-Debe incluir una sección `Lo que recibes` con cards para:
+- Nombre y apellido.
+- Cargo.
+- Empresa.
+- Correo corporativo.
+- Teléfono / WhatsApp.
+- Uso actual de NetSuite.
+- Tipo de operación.
+- Procesos a optimizar.
+- Uso de Excel.
+- Principal problema a resolver.
+- Participantes sugeridos.
+- Fecha estimada de inicio.
+- Botón `Solicitar evaluación IA + NetSuite`.
+- Mensaje de seguridad/respuesta en 48 horas.
 
-- Problemas detectados
-- Brechas identificadas
-- Oportunidades de IA
-- Priorización
-- Quick wins
-- Roadmap inicial
+Por ahora el submit puede ser simulado en frontend. No conectar backend.
 
-### 9.8 Casos de uso / oportunidades
+### 9.8 Criterios visuales obligatorios
 
-Debe incluir una sección `Oportunidades que podemos identificar`.
+La implementación debe aproximarse a Labs en:
 
-Cards mínimas:
+- layout general,
+- ancho máximo de contenido,
+- separación vertical entre secciones,
+- grillas,
+- cards,
+- radios de borde,
+- sombras o elevación,
+- jerarquía tipográfica,
+- tamaño de títulos,
+- contraste de CTAs,
+- fondos alternados,
+- comportamiento responsive,
+- footer.
 
-- Tiempos reales de producción
-- Comparación estimada vs real
-- Alertas de margen
-- Reportes editables
-- Trazabilidad histórica
-- Inventario añejo
-- Resúmenes automáticos
-- Patrones de mejora
-- Cruce de datos
+No basta que el contenido esté: debe verse como la página objetivo.
 
-### 9.9 Proceso
+### 9.9 Estructura técnica sugerida
 
-Debe implementar un proceso de 5 pasos:
-
-1. Solicitud
-2. Revisión
-3. Reunión inicial
-4. Análisis
-5. Informe final
-
-Debe verse como timeline, cards numeradas o bloque secuencial claro.
-
-### 9.10 Perfil ideal
-
-Debe incluir la sección `¿Es para tu empresa?`.
-
-Bloque `Para empresas que...`:
-
-- Utilizan NetSuite actualmente o están en proceso de implementación.
-- Tienen operación productiva, logística, industrial, bodega o inventario.
-- Manejan órdenes de trabajo, órdenes de venta, materiales o planificación.
-- Usan Excel para complementar procesos críticos.
-- Necesitan mejorar trazabilidad, costos, tiempos, márgenes o reportabilidad.
-- Tienen gerencia involucrada en la mejora operacional.
-- Buscan aplicar IA de forma práctica.
-
-Bloque `Funciona mejor cuando...`:
-
-- Hay madurez operacional.
-- Existe disposición a revisar procesos.
-- Se busca aplicar IA, no solo explorarla.
-- Hay gerencia comprometida.
-
-Debe incluir métricas de confianza:
-
-- 30+ años de experiencia
-- 100% foco operacional
-- NetSuite expertise
-
-### 9.11 Experiencia
-
-Debe incluir una sección sobre experiencia:
-
-- Liderado por ingenieros con más de 30 años de experiencia en procesos apoyados en TI.
-- Enfoque desde operación, procesos, gestión, datos y necesidades reales de empresas productivas.
-- Cards:
-  - Experiencia operacional
-  - IA aplicada
-  - NetSuite integrado
-
-### 9.12 Formulario visual
-
-El formulario debe estar presente visualmente, aunque por ahora no tenga integración funcional.
-
-Campos mínimos visibles:
-
-- Nombre y apellido
-- Cargo
-- Empresa
-- Correo corporativo
-- Teléfono / WhatsApp
-- Uso actual de NetSuite
-- Tipo de operación
-- Procesos a optimizar
-- Uso de Excel
-- Principal problema a resolver
-- Participantes sugeridos en reunión
-- Fecha estimada de inicio
-
-Criterio técnico vigente:
-
-- No conectar todavía a backend, email, CRM, webhook, NetSuite ni n8n.
-- Puede mostrar mensaje local de éxito simulado.
-- Debe ser fácil conectar posteriormente a un endpoint mediante variable de entorno.
-
-### 9.13 CTA final y footer
-
-Debe existir una sección final de conversión con:
-
-- Título orientado a descubrir dónde la IA puede generar impacto real.
-- Precio `USD 4.900`.
-- Duración `2-3 semanas`.
-- Modalidad remota o híbrida.
-- CTA hacia evaluación.
-
-Footer mínimo:
-
-- Texto corto de propuesta At-Once.
-- Navegación interna.
-- Contacto `contacto@at-once.cl`.
-- Copyright.
-
-### 9.14 Criterios visuales
-
-La landing debe sentirse moderna, ejecutiva y B2B.
-
-Lineamientos:
-
-- Fondo claro con secciones alternadas.
-- Cards con bordes suaves, sombras sutiles o separación visual clara.
-- Uso de grillas responsive.
-- Títulos grandes y jerarquía tipográfica marcada.
-- CTA principal destacado.
-- Colores compatibles con la identidad At-Once.
-- Buen espaciado vertical.
-- Mobile first / responsive.
-
-### 9.15 Estructura técnica sugerida
-
-Componentes sugeridos:
+Se recomienda organizar el código así:
 
 ```text
 app/page.tsx
@@ -414,29 +320,36 @@ lib/landing-content.ts
 
 Criterio:
 
-- `app/page.tsx` debe orquestar secciones.
-- El contenido editable debe vivir preferentemente en `lib/landing-content.ts`.
-- Los componentes deben ser presentacionales y simples.
-- No introducir backend en esta etapa.
+- `app/page.tsx` solo debe orquestar secciones.
+- `lib/landing-content.ts` debe concentrar textos, listas, cards y opciones.
+- Los componentes deben encargarse de layout/presentación.
+- No introducir backend todavía.
 
-### 9.16 Criterios de aceptación
+### 9.10 Criterios de aceptación
 
-La tarea del Programador se considerará terminada cuando:
+La tarea del Programador solo se acepta cuando:
 
-- La home `/` se parezca estructuralmente a la landing de referencia.
-- Todas las secciones principales estén presentes.
-- La navegación superior funcione con anclas internas.
-- Los CTA lleven al formulario/evaluación dentro de la misma página.
-- El sitio compile con `npm run build`.
-- La imagen Docker siga levantando en puerto interno `80`.
-- EasyPanel pueda desplegar sin cambios manuales adicionales.
-- El sitio sea responsive en móvil y escritorio.
-- El formulario esté visible, pero sin integración real.
+- `https://web.at-once.cl` abre la landing completa en `/`.
+- Al compararla lado a lado con `https://labs.muze.cl/at-once/`, la estructura y experiencia se ven prácticamente iguales.
+- Todas las secciones de Labs están presentes.
+- La navegación ancla funciona.
+- Los CTAs llevan a evaluación/formulario.
+- El formulario está completo visualmente.
+- La página es responsive.
+- `npm run build` compila.
+- Docker sigue levantando en puerto interno `80`.
+- EasyPanel redeploya sin cambios manuales extra.
 
-### 9.17 Restricciones
+### 9.11 Rechazo explícito de entrega
 
-- No modificar la arquitectura Docker si no es necesario.
-- No conectar el formulario sin autorización explícita.
-- No registrar este despliegue en `infra-prod.md`.
-- No mezclar este sitio con n8n u otros servicios.
-- No dejar textos genéricos de placeholder en la home.
+Debe rechazarse la entrega si ocurre cualquiera de estos casos:
+
+- La home muestra solo logo, texto corto o link a otra página.
+- La página tiene secciones distintas o en otro orden sin aprobación.
+- Se omite el formulario.
+- Se omiten métricas del hero.
+- Se omite el proceso de 5 pasos.
+- Se omite la sección de perfil ideal.
+- Se omite la experiencia de 30+ años.
+- El diseño parece una landing nueva no relacionada con Labs.
+- El Programador cambia el stack o la infraestructura para resolver un problema de frontend.
