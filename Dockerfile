@@ -42,4 +42,7 @@ EXPOSE 80
 ENV PORT=80
 ENV HOSTNAME="0.0.0.0"
 
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD node -e "const http=require('http');const req=http.get('http://127.0.0.1:80/api/health',res=>process.exit(res.statusCode===200?0:1));req.on('error',()=>process.exit(1));"
+
 CMD ["node", "server.js"]
