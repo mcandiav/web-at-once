@@ -4,6 +4,7 @@
 
 | Fecha | Versión | Cambio realizado | Motivo | Impacto | Sección afectada |
 |---|---|---|---|---|---|
+| 2026-05-04 | V2.1 | Se agrega especificación de efectos visuales por bloque basada en inspección directa de `https://labs.muze.cl/at-once/`. | El Programador necesita saber exactamente qué efecto o animación debe tener cada sección para replicar la experiencia visual de Labs. | Cada bloque del punto 9 ahora incluye un párrafo `**Efectos visuales del bloque:**` con instrucciones de animación y comportamiento visual. | Especificación funcional y visual |
 | 2026-05-04 | V2.0 | Se consolida la documentación oficial del proyecto en `README.md`. | Evitar doble fuente documental entre `README.md` y `read.md`. | `README.md` pasa a ser la única fuente oficial del proyecto. `read.md` deja de ser documento vigente. | Documento completo |
 | 2026-05-04 | V2.0 | Se redefine el sitio como landing de una sola página. | El Programador estaba generando una home inicial y una segunda página de taladro, lo que no corresponde al objetivo. | Toda la experiencia debe vivir en `/`; no debe existir navegación obligatoria hacia otra página para ver el contenido principal. | Arquitectura frontend / Rutas |
 | 2026-05-04 | V2.0 | Se incorpora especificación bloque por bloque basada en la landing `https://labs.muze.cl/at-once/`. | El Programador necesita una guía cerrada para implementar sin reinterpretar contenido, estructura ni flujo. | La implementación debe copiar/reconstruir la landing Labs como modelo visual, estructural y narrativo. | Especificación funcional y visual |
@@ -224,6 +225,8 @@ Esta sección define lo que el Programador debe implementar. El objetivo es que 
 
 **Regla:** todos los links deben apuntar a secciones dentro de `/`. No deben navegar a otra página.
 
+**Efectos visuales del bloque:** El header es `sticky` (posición fija al hacer scroll). Sobre fondo blanco con una sombra sutil (`box-shadow`) que aparece al hacer scroll para separarlo visualmente del contenido. Los links de navegación tienen transición de color suave (`transition: color 180ms ease`) al hacer hover. El botón CTA `Solicita tu evaluación` tiene fondo azul sólido (`#2563EB`) con ligera elevación de sombra al hacer hover (`box-shadow` más pronunciado). En mobile, el menú colapsa a un ícono hamburger con animación de apertura.
+
 ---
 
 ### 9.2 Hero principal
@@ -281,6 +284,8 @@ Diagnóstico en 2-3 semanas • USD 4.900 • Remoto o híbrido
 
 **Regla visual:** el hero debe ser la sección de mayor impacto visual. No puede verse como una portada mínima.
 
+**Efectos visuales del bloque:** El fondo del hero tiene un patrón de puntos en red tipo "neural network" en azul muy claro (`opacity: 0.06`) sobre blanco, generado con SVG o `radial-gradient`. El título tiene palabras clave en azul (`#2563EB`) y el resto en negro/oscuro, usando `<span>` con color diferenciado (por ejemplo, "IA conectada" resaltado). La etiqueta superior `Diagnóstico IA + NetSuite` es un badge con borde redondeado (`border-radius: 9999px`), borde sutil azul y un punto parpadeante animado con `@keyframes pulse` (escala entre 0.8 y 1.2, `opacity` entre 0.6 y 1, duración 2s infinito). El CTA primario tiene fondo azul sólido con transición de sombra al hover. El CTA secundario es outline/ghost. Ambos CTAs y el párrafo de texto entran con animación `fade-in` + `translateY(20px → 0)` al cargar la página, en cascada con `animation-delay` escalonado (0ms, 100ms, 200ms). La línea comercial bajo los CTAs es texto pequeño en gris con separadores `•`.
+
 ---
 
 ### 9.3 Panel visual del hero
@@ -313,6 +318,8 @@ Mini flujo:
 3. Entregamos roadmap ejecutable.
 
 **Regla visual:** debe verse como card/panel destacado, no como texto plano.
+
+**Efectos visuales del bloque:** El panel es una card con fondo blanco, borde redondeado (`border-radius: 16px`) y sombra media (`box-shadow: 0 8px 32px rgba(0,0,0,0.10)`). Los chips (`Quick Wins`, `Diagnóstico IA`, `NetSuite Operations`) son badges pill con fondo azul claro (`#EFF6FF`) y texto azul (`#2563EB`), con transición de fondo al hover. Las métricas (`10`, `100%`, `USD 4.900`, `2-3`) muestran el número en tipografía grande y bold, en azul, y el label debajo en gris. Los números de métrica deben animarse al entrar en viewport con un efecto de conteo ascendente (`counter animation` vía `requestAnimationFrame` o librería `CountUp.js`). El mini flujo tiene números grandes (1, 2, 3) en gris claro como marca de agua de fondo, con el texto encima. El panel completo entra con `fade-in` + `translateX(30px → 0)` al cargar la página, con `animation-delay: 300ms`.
 
 ---
 
@@ -355,6 +362,8 @@ Muchas empresas cuentan con un ERP robusto, pero sus procesos críticos siguen d
    La experiencia pesa más que indicadores conectados y alertas oportunas.
 
 **Regla visual:** cards en grilla, con separación clara, bordes suaves y jerarquía similar a Labs.
+
+**Efectos visuales del bloque:** La sección tiene fondo levemente diferenciado (gris muy claro, `#F8FAFC` o equivalente) para separarse visualmente del hero. El eyebrow `EL PROBLEMA` aparece en texto pequeño uppercase con `letter-spacing` amplio, en azul. Las 4 cards están en grilla de 2×2 (desktop) o 1 columna (mobile). Cada card tiene fondo blanco, borde `1px solid #E2E8F0`, `border-radius: 12px` y sombra sutil. Al hacer hover sobre cada card, se eleva la sombra (`box-shadow` más pronunciado) y aparece un borde izquierdo azul de 3px (`border-left: 3px solid #2563EB`) con transición suave de `200ms`. Toda la sección (eyebrow, título, bajada y las 4 cards) entra con animación `scroll reveal`: `opacity: 0 → 1` + `translateY(24px → 0)` al cruzar el viewport, usando `IntersectionObserver`. Las cards aparecen en cascada con `animation-delay` escalonado de 80ms entre cada una.
 
 ---
 
@@ -416,6 +425,8 @@ Evaluamos punto por punto dónde tu operación puede funcionar mejor conectando 
 
 **Regla visual:** debe ser una grilla clara de cards. La cifra `10 áreas` debe coincidir con 10 elementos visibles.
 
+**Efectos visuales del bloque:** Fondo blanco. La cifra `10` en el título puede resaltarse en azul. La grilla de 10 cards se organiza en 2 columnas (desktop) o 1 columna (mobile); la última card (item 10) ocupa el ancho de 2 columnas si el total es impar, o bien se mantiene en grilla simétrica. Cada card tiene fondo blanco, borde `1px solid #E2E8F0`, `border-radius: 12px`, ícono o número de área pequeño en la esquina superior izquierda en azul claro. Al hacer hover, la card eleva su `box-shadow` y el borde pasa de gris claro a azul (`border-color: #2563EB`) con transición `200ms ease`. La sección completa entra con `scroll reveal` idéntico al bloque anterior: `opacity + translateY` vía `IntersectionObserver`. Las 10 cards se revelan en grupos de 2 (por fila), con `animation-delay` escalonado.
+
 ---
 
 ### 9.6 Sección Lo que recibes
@@ -457,6 +468,8 @@ Entregables concretos del diagnóstico
    Ruta práctica para implementar las oportunidades priorizadas.
 
 **Regla visual:** bloque de cards breves. No convertirlo en texto largo.
+
+**Efectos visuales del bloque:** Fondo gris claro (`#F8FAFC`) para diferenciar visualmente de la sección anterior. Las 6 cards están en grilla de 3 columnas (desktop) o 2 columnas (tablet) o 1 columna (mobile). Cada card tiene fondo blanco, `border-radius: 12px`, sombra ligera. El título de cada entregable en bold negro y el texto descriptivo en gris muted. Al hacer hover, ligero `scale(1.02)` más elevación de sombra (`transform + box-shadow`) con transición `200ms ease`. La sección entra con `scroll reveal` (`opacity + translateY`) vía `IntersectionObserver`, con las 6 cards apareciendo en cascada con `animation-delay` de 60ms entre cada una.
 
 ---
 
@@ -515,6 +528,8 @@ Detectamos procesos donde IA puede reducir trabajo manual, cruzar información, 
 
 **Regla visual:** grilla de oportunidades con cards homogéneas y fácil lectura.
 
+**Efectos visuales del bloque:** Fondo blanco. Grilla de 3 columnas (desktop), 2 columnas (tablet), 1 columna (mobile). Cada card tiene fondo blanco, borde `1px solid #E2E8F0`, `border-radius: 12px`, título en bold negro y descripción en gris. Al hacer hover sobre la card, el borde cambia a azul (`border-color: #2563EB`) y aparece un ligero `box-shadow` azul difuso. La sección entra con `scroll reveal` (`opacity + translateY`) vía `IntersectionObserver`. Las 9 cards se revelan en cascada con `animation-delay` de 60ms entre cada una, de izquierda a derecha, fila por fila.
+
 ---
 
 ### 9.8 Sección El proceso
@@ -559,6 +574,8 @@ Un proceso estructurado de 5 pasos para identificar oportunidades concretas con 
    Se entrega una lista priorizada de oportunidades, quick wins y roadmap de implementación.
 
 **Regla visual:** timeline, stepper o cards numeradas. Los números 1 a 5 deben verse claramente.
+
+**Efectos visuales del bloque:** Fondo gris claro (`#F8FAFC`). Cada paso se presenta como una card vertical o fila con el número grande como marca de agua de fondo (tipografía grande, gris muy claro, `opacity: 0.15`, posicionado detrás del contenido con `z-index`). Encima de ese número de fondo, aparece un badge azul pequeño con el número del paso (`1`, `2`, ..., `5`). Al hacer hover sobre cada paso, la sombra se eleva y el badge azul se ilumina levemente. Los 5 pasos entran con `scroll reveal` escalonado: cada paso aparece con `opacity + translateY` con un `animation-delay` de 100ms adicional por paso (0ms, 100ms, 200ms, 300ms, 400ms), dando una sensación de secuencia progresiva al hacer scroll.
 
 ---
 
@@ -618,6 +635,8 @@ El diagnóstico requiere uso real de NetSuite y disposición a revisar procesos 
 NetSuite expertise
 ```
 
+**Efectos visuales del bloque:** Fondo blanco. La sección se divide en dos columnas (desktop): izquierda con la lista `Para empresas que...` y derecha con las 4 cards `Funciona mejor cuando...`. Los ítems de la lista tienen un ícono de check azul (`✓`) animado: al entrar en viewport, los checks aparecen en secuencia con `opacity + scale` (de `0` a `1`) con `animation-delay` de 60ms por ítem, simulando que se van tildando uno a uno. Las 4 cards de `Funciona mejor cuando` tienen fondo blanco, borde `1px solid #E2E8F0`, `border-radius: 12px`, y el título de cada condición en bold azul. El texto de cierre aparece en una franja gris claro con borde izquierdo azul de 3px (`border-left: 3px solid #2563EB`) a modo de blockquote. Las 3 métricas finales (`30+`, `100%`, `NetSuite`) se muestran en tipografía grande bold azul con su label en gris debajo, entrando con animación de conteo o `fade-in` al cruzar el viewport.
+
 ---
 
 ### 9.10 Sección Nuestra experiencia
@@ -674,6 +693,8 @@ Entendemos organizaciones tradicionales, decisiones operacionales y cómo NetSui
 USD 4.900
 Remoto o híbrido
 ```
+
+**Efectos visuales del bloque:** Fondo gris muy claro (`#F8FAFC`). El título resalta `30 años` en azul bold. La sección se puede organizar en dos columnas (desktop): izquierda con los 3 párrafos y derecha con las 3 cards. Las 3 cards (`Experiencia operacional`, `IA aplicada`, `NetSuite integrado`) tienen fondo blanco, `border-radius: 12px`, sombra ligera, con el título bold negro y descripción en gris. Al hacer hover, se eleva la sombra con `transition: box-shadow 200ms ease`. La franja de métricas al pie (`2-3 semanas • USD 4.900 • Remoto o híbrido`) se presenta en una barra gris claro separada, con texto en gris muted y separadores `|` o `•`. Toda la sección entra con `scroll reveal` (`opacity + translateY`) vía `IntersectionObserver`.
 
 ---
 
@@ -805,6 +826,8 @@ Tu información está segura. No compartimos datos con terceros y responderemos 
 
 **Regla técnica:** no conectar a backend. El submit debe mostrar un modal o mensaje local de éxito.
 
+**Efectos visuales del bloque:** Fondo blanco. La sección se divide en dos columnas (desktop): izquierda con el texto introductorio y los beneficios, derecha con el formulario. Los beneficios (`Sin compromiso inicial`, `Revisión gratuita`, `Respuesta en 48 horas`) tienen un ícono de check azul delante. El bloque de contacto directo (`contacto@at-once.cl`) se presenta como un link azul subrayado con ícono de sobre. Los campos del formulario tienen borde `1px solid #CBD5E1`, `border-radius: 8px`, y al recibir foco (`focus`) el borde cambia a azul (`#2563EB`) con una sombra de foco sutil (`box-shadow: 0 0 0 3px rgba(37,99,235,0.15)`), con `transition: border-color 180ms, box-shadow 180ms`. Los checkboxes de selección múltiple son chips/tags clicables (no checkboxes nativos): cada opción es un badge pill que al seleccionarse cambia de fondo blanco+borde gris a fondo azul claro (`#EFF6FF`) + borde azul, con `transition: background 180ms`. El botón de submit es azul sólido, ancho completo, con efecto hover de sombra más intensa. Al hacer submit, el formulario se reemplaza por el modal/mensaje de éxito con animación `fade-in` (ver bloque 9.12). La sección completa entra con `scroll reveal` (`opacity + translateY`) al cruzar el viewport.
+
 ---
 
 ### 9.12 Modal / mensaje de evaluación enviada
@@ -832,6 +855,8 @@ Entendido
 ```
 
 **Regla técnica:** estado local en React. No persistir ni enviar datos todavía.
+
+**Efectos visuales del bloque:** Al hacer submit, el formulario desaparece con `opacity: 1 → 0` + `scale(0.97)` en `200ms`, y el modal/mensaje de éxito aparece con `opacity: 0 → 1` + `scale(0.97 → 1)` en `300ms` (`transition: opacity, transform`). El modal tiene un ícono de check animado (círculo verde que se dibuja con animación `stroke-dashoffset` de SVG, o bien un checkmark con `@keyframes` de escala). Fondo blanco, borde redondeado `border-radius: 16px`, sombra `box-shadow` prominente. El botón `Entendido` es azul sólido con hover de sombra. Si se implementa como overlay/modal flotante, aparece sobre un backdrop semitransparente (`background: rgba(0,0,0,0.4)`) con `backdrop-filter: blur(4px)`.
 
 ---
 
@@ -877,6 +902,8 @@ Diagnóstico en 2-3 semanas • Modalidad remota o híbrida • Informe ejecutiv
 Solicitar evaluación IA + NetSuite
 ```
 
+**Efectos visuales del bloque:** Fondo azul oscuro (`#1E3A5F` o similar) o azul de marca (`#1D4ED8`) para crear contraste fuerte con las secciones anteriores. Todo el texto en blanco o blanco semitransparente. El eyebrow en texto pequeño uppercase con `letter-spacing` amplio, en azul claro o blanco suave. El precio `USD 4.900` resaltado en tipografía bold blanca o amarilla. El botón CTA es blanco sólido con texto azul oscuro, con hover que invierte a borde blanco + texto blanco + fondo transparente. La línea comercial es texto pequeño blanco semitransparente con separadores `•`. Toda la sección entra con `scroll reveal` (`opacity + translateY`) al cruzar el viewport.
+
 ---
 
 ### 9.14 Footer
@@ -921,6 +948,8 @@ Solicitar evaluación
 ```text
 Diseñado para empresas productivas con NetSuite.
 ```
+
+**Efectos visuales del bloque:** Fondo gris oscuro o casi negro (`#0F172A` o `#1E293B`). Texto en blanco con `opacity: 0.8` para el cuerpo y `opacity: 0.5` para el copyright. El logo `At-Once` se muestra en blanco. Los links de navegación tienen transición de `opacity: 0.7 → 1` al hover. El email `contacto@at-once.cl` tiene ícono de sobre antes del texto. La línea divisoria entre la navegación y el copyright es un `<hr>` con color blanco semitransparente (`rgba(255,255,255,0.1)`). No hay efectos de scroll reveal en el footer; entra estáticamente.
 
 ---
 

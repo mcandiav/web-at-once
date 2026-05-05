@@ -3,13 +3,13 @@
 export function IdealProfileSection() {
   const c = landingContent.idealProfile;
   return (
-    <section className="section" id="perfil">
+    <section className="section" id="perfil" data-reveal>
       <p className="eyebrow">{c.eyebrow}</p>
       <h2>{c.title}</h2>
       <div className="profile-columns">
         <article className="card">
           <h3>Para empresas que:</h3>
-          <ul className="list">
+          <ul className="list checklist">
             {c.forCompanies.map((item) => (
               <li key={item}>{item}</li>
             ))}

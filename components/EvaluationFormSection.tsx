@@ -50,7 +50,7 @@ export function EvaluationFormSection() {
   };
 
   return (
-    <section className="section" id="evaluacion">
+    <section className="section" id="evaluacion" data-reveal>
       <p className="eyebrow">{c.form.eyebrow}</p>
       <h2>{c.form.title}</h2>
       <p className="section-copy">{c.form.intro1}</p>
@@ -73,12 +73,12 @@ export function EvaluationFormSection() {
           <label>Uso actual de NetSuite<select required value={form.netsuiteUsage} onChange={(e) => setForm({ ...form, netsuiteUsage: e.target.value })}><option value="">Selecciona una opción</option>{c.options.netsuiteUsage.map((option) => <option key={option}>{option}</option>)}</select></label>
           <label>Tipo de operación<select required value={form.operationType} onChange={(e) => setForm({ ...form, operationType: e.target.value })}><option value="">Selecciona una opción</option>{c.options.operationType.map((option) => <option key={option}>{option}</option>)}</select></label>
 
-          <fieldset><legend>Procesos a optimizar</legend>{c.options.processToOptimize.map((option) => <label key={option} className="check"><input type="checkbox" checked={form.processes.includes(option)} onChange={() => toggleMulti("processes", option)} />{option}</label>)}</fieldset>
+          <fieldset><legend>Procesos a optimizar</legend><div className="chip-group">{c.options.processToOptimize.map((option) => <label key={option} className="check chip-check"><input type="checkbox" checked={form.processes.includes(option)} onChange={() => toggleMulti("processes", option)} />{option}</label>)}</div></fieldset>
           <label>Uso actual de Excel para complementar NetSuite<select value={form.excelUsage} onChange={(e) => setForm({ ...form, excelUsage: e.target.value })}><option value="">Selecciona una opción</option>{c.options.excelUsage.map((option) => <option key={option}>{option}</option>)}</select></label>
 
           <label>Principal problema que espera resolver<textarea required value={form.mainProblem} onChange={(e) => setForm({ ...form, mainProblem: e.target.value })} /></label>
 
-          <fieldset><legend>Participantes sugeridos para reunión</legend>{c.options.meetingParticipants.map((option) => <label key={option} className="check"><input type="checkbox" checked={form.participants.includes(option)} onChange={() => toggleMulti("participants", option)} />{option}</label>)}</fieldset>
+          <fieldset><legend>Participantes sugeridos para reunión</legend><div className="chip-group">{c.options.meetingParticipants.map((option) => <label key={option} className="check chip-check"><input type="checkbox" checked={form.participants.includes(option)} onChange={() => toggleMulti("participants", option)} />{option}</label>)}</div></fieldset>
           <label>Fecha estimada de inicio<select required value={form.startDate} onChange={(e) => setForm({ ...form, startDate: e.target.value })}><option value="">Selecciona una opción</option>{c.options.startDate.map((option) => <option key={option}>{option}</option>)}</select></label>
 
           <button className="btn btn-primary" type="submit">{c.form.submit}</button>

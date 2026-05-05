@@ -10,11 +10,13 @@ import { ExperienceSection } from "@/components/ExperienceSection";
 import { EvaluationFormSection } from "@/components/EvaluationFormSection";
 import { FinalCtaSection } from "@/components/FinalCtaSection";
 import { Footer } from "@/components/Footer";
+import { VisualEffects } from "@/components/VisualEffects";
 import { landingContent } from "@/lib/landing-content";
 
 export default function Home() {
   return (
     <main className="landing-root">
+      <VisualEffects />
       <Header items={landingContent.nav} />
       <HeroSection content={landingContent.hero} />
       <ProblemSection />

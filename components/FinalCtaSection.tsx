@@ -3,7 +3,7 @@
 export function FinalCtaSection() {
   const c = landingContent.finalCta;
   return (
-    <section className="section cta-final" id="sobre">
+    <section className="section cta-final" id="sobre" data-reveal>
       <p className="eyebrow">{c.eyebrow}</p>
       <h2>{c.title}</h2>
       <p className="section-copy">{c.paragraph}</p>

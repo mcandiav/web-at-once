@@ -3,7 +3,7 @@
 export function ExperienceSection() {
   const c = landingContent.experience;
   return (
-    <section className="section section-alt" id="experiencia">
+    <section className="section section-alt" id="experiencia" data-reveal>
       <p className="eyebrow">{c.eyebrow}</p>
       <h2>{c.title}</h2>
       {c.paragraphs.map((paragraph) => (
@@ -11,7 +11,7 @@ export function ExperienceSection() {
       ))}
       <div className="grid grid-3">
         {c.cards.map((card) => (
-          <article className="card" key={card.title}>
+          <article className="card reveal-item" key={card.title}>
             <h3>{card.title}</h3>
             <p>{card.description}</p>
           </article>
